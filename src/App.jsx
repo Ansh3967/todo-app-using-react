@@ -31,9 +31,15 @@ function App() {
   };
 
   useEffect(() => {
-    const todo = JSON.parse(localStorage.getItem("todos"));
-    if (todo && todo.length > 0) {
-      setTodos(todo);
+    try {
+      const todo = JSON.parse(localStorage.getItem("todos"));
+      if (todo && todo.length > 0) {
+        setTodos(todo);
+      }
+    } catch (error) {
+      console.error("Failed to parse todos from localStorage:", error);
+      // Optionally clear invalid data or set to default empty array
+      setTodos([]);
     }
   }, []);
 
@@ -45,15 +51,20 @@ function App() {
     <TodoProvider
       value={{ todos, addTodo, updateTodo, delTodo, toggleComplete }}
     >
-      <div className="bg-[#584df0] min-h-screen py-8">
-        <div className="bg-[#9a28c4] w-full max-w-2xl mx-auto shadow-md rounded-lg  px-4 py-3 text-white ">
-          <h1 className="text-2xl font-bold text-center mb-8 mt-2">
-            Manage Your Todos
+      <div className="bg-gradient-to-br from-blue-300 to-purple-400 min-h-screen py-12 flex justify-center items-center">
+        <div className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg w-full max-w-2xl mx-auto shadow-xl rounded-xl p-6 text-gray-800">
+          <h1 className="text-4xl font-extrabold text-center mb-10 text-gray-900 drop-shadow-md">
+            Your Daily Tasks
           </h1>
-          <div className="mb-4">
+          <div className="mb-6">
             <TodoForm />
           </div>
-          <div className="flex flex-wrap gap-y-3">
+          <div className="flex flex-wrap gap-y-4">
+            {todos.length === 0 && (
+              <p className="text-center w-full text-gray-600 italic">
+                No tasks yet! Add one above.
+              </p>
+            )}
             {todos.map((todo) => (
               <div key={todo.id} className="w-full">
                 <TodoItem todo={todo} />

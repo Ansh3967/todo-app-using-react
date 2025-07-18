@@ -11,17 +11,20 @@ function TodoForm() {
     setTodo("");
   };
   return (
-    <form onSubmit={submit} className="flex">
+    <form
+      onSubmit={submit}
+      className="flex rounded-lg overflow-hidden shadow-sm"
+    >
       <input
         type="text"
-        placeholder="Write Todo..."
-        className="w-full border border-black/10 rounded-l-lg px-3 outline-none duration-150 bg-white/20 py-1.5"
+        placeholder="Add a new task..."
+        className="w-full px-4 py-3 text-lg border-2 border-gray-300 focus:border-blue-500 outline-none transition-all duration-200 ease-in-out placeholder-gray-500 text-gray-800"
         value={todo}
         onChange={(e) => setTodo(e.target.value)}
       />
       <button
         type="submit"
-        className="rounded-r-lg px-3 py-1 bg-green-400 text-white shrink-0"
+        className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition-colors duration-200 ease-in-out shrink-0"
       >
         Add
       </button>
